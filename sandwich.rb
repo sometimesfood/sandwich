@@ -19,15 +19,20 @@ def run_chef
   Chef::Log.level = :debug
   run_context = Chef::RunContext.new($client.node, {})
 #  @recipe = Chef::Recipe.new(nil, nil, run_context)
-  runrun = Chef::Runner.new(run_context).converge
   Chef::Log.level = :debug
+  add_package_to_run_context('gitg', run_context)
+  runrun = Chef::Runner.new(run_context).converge
   runrun
-  install_package('gitg', run_context)
 end
 
 def install_package(package_name, run_context)
   package = Chef::Resource::Package.new(package_name, run_context)
   package.run_action(:install)
+end
+
+def add_package_to_run_context(package_name, run_context)
+  package = Chef::Resource::Package.new(package_name, run_context)
+  run_context.resource_collection.insert(package)
 end
 
 puts 'Hello chef run context world'
