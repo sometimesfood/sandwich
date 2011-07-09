@@ -5,6 +5,12 @@ require 'chef/recipe'
 require 'chef/resource'
 require 'chef/providers'
 
+class Chef::Recipe
+  def from_string(string)
+    self.instance_eval(string, 'sandwich', 1)
+  end
+end
+
 $client = nil
 
 def rebuild_node
@@ -18,9 +24,13 @@ def run_chef
   rebuild_node
   Chef::Log.level = :debug
   run_context = Chef::RunContext.new($client.node, {})
-#  @recipe = Chef::Recipe.new(nil, nil, run_context)
+  recipe = Chef::Recipe.new(nil, nil, run_context)
+  input = <<EOS
+package "emacs23"
+package "gitg"
+EOS
+  recipe.from_string(input)
   Chef::Log.level = :debug
-  add_package_to_run_context('gitg', run_context)
   runrun = Chef::Runner.new(run_context).converge
   runrun
 end
