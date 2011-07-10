@@ -18,12 +18,11 @@ end
 
 def run_chef
   rebuild_node
-  Chef::Log.level = :debug
   run_context = Chef::RunContext.new($client.node, {})
   recipe = Chef::Recipe.new(nil, nil, run_context)
   input = ARGF.read
   recipe.from_string(input)
-  Chef::Log.level = :debug
+  Chef::Log.level = :warn
   runrun = Chef::Runner.new(run_context).converge
   runrun
 end
