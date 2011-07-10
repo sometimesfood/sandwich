@@ -1,4 +1,3 @@
-require 'chef'
 require 'chef/recipe'
 
 class Chef::Recipe

@@ -1,1 +1,1 @@
-require 'sandwich/recipe'
+require 'sandwich/runner'
