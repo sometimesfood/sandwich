@@ -25,10 +25,7 @@ def run_chef
   Chef::Log.level = :debug
   run_context = Chef::RunContext.new($client.node, {})
   recipe = Chef::Recipe.new(nil, nil, run_context)
-  input = <<EOS
-package "emacs23"
-package "gitg"
-EOS
+  input = ARGF.read
   recipe.from_string(input)
   Chef::Log.level = :debug
   runrun = Chef::Runner.new(run_context).converge
