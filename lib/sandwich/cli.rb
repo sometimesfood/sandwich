@@ -21,6 +21,13 @@ module Sandwich
       :default     => '-',
       :on          => :head
 
+    option :log_level,
+      :short        => '-l LEVEL',
+      :long         => '--log_level LEVEL',
+      :description  => 'Set the log level (debug, info, warn, error, fatal)',
+      :default      => :warn,
+      :proc         => lambda { |l| l.to_sym }
+
     def run(argv)
       parse_options(argv)
       if config[:file] == '-'
@@ -29,7 +36,7 @@ module Sandwich
         file = File.read(config[:file])
         runner = Sandwich::Runner.new(file)
       end
-      runner.run(:debug)
+      runner.run(config[:log_level])
     end
   end
 end
