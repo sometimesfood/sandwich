@@ -1,5 +1,10 @@
 #!/usr/bin/env ruby
 require 'sandwich'
 
-sandwich = Sandwich::CLI.new
-sandwich.run(ARGV)
+begin
+  sandwich = Sandwich::CLI.new
+  sandwich.run(ARGV)
+rescue Exception => e
+  $stderr.puts("sandwich: #{e.message}")
+  exit(1)
+end
