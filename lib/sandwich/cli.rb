@@ -1,5 +1,6 @@
 require 'mixlib/cli'
 require 'sandwich/runner'
+require 'sandwich/version'
 
 module Sandwich
   class CLI
@@ -27,6 +28,14 @@ module Sandwich
       :description  => 'Set the log level (debug, info, warn, error, fatal)',
       :default      => :warn,
       :proc         => lambda { |l| l.to_sym }
+
+    option :version,
+      :short       => '-v',
+      :long        => '--version',
+      :description => 'Show sandwich version',
+      :boolean     => true,
+      :proc        => lambda { |v| puts "sandwich: #{Sandwich::Version}" },
+      :exit        => 0
 
     def run(argv)
       parse_options(argv)
