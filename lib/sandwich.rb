@@ -1,3 +1,5 @@
+# sandwich - the easiest way to get started as a chef
+
 # Copyright 2011 Sebastian Boehm
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -15,3 +17,7 @@
 require 'sandwich/version'
 require 'sandwich/runner'
 require 'sandwich/cli'
+
+# This package contains delicious sandwich ingredients
+module Sandwich
+end

@@ -3,6 +3,8 @@ require 'sandwich/runner'
 require 'sandwich/version'
 
 module Sandwich
+  # This class parses ARGV style command line options and starts a
+  # configured {Sandwich::Runner}.
   class CLI
     include Mixlib::CLI
 
@@ -37,6 +39,10 @@ module Sandwich
       :proc        => lambda { |v| puts "sandwich: #{Sandwich::Version}" },
       :exit        => 0
 
+    # Start Sandwich
+    #
+    # @param [Array] argv ARGV style command line options passed to sandwich
+    # @return [void]
     def run(argv)
       parse_options(argv)
       if config[:file] == '-'
