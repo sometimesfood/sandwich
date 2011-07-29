@@ -17,13 +17,6 @@ module Sandwich
       :show_options => true,
       :exit         => 0
 
-    option :file,
-      :short       => '-f FILE',
-      :long        => '--file FILE',
-      :description => 'Read recipe from FILE, defaults to standard input',
-      :default     => '-',
-      :on          => :head
-
     option :log_level,
       :short        => '-l LEVEL',
       :long         => '--log_level LEVEL',
@@ -39,16 +32,22 @@ module Sandwich
       :proc        => lambda { |v| puts "sandwich: #{Sandwich::Version}" },
       :exit        => 0
 
+    def initialize
+      self.class.banner("Usage: #{$0} [options] [FILE]")
+      super
+    end
+
     # Start Sandwich
     #
     # @param [Array] argv ARGV style command line options passed to sandwich
     # @return [void]
     def run(argv)
-      parse_options(argv)
-      if config[:file] == '-'
+      recipe_file = parse_options(argv)
+      if recipe_file.empty?
         runner = Sandwich::Runner.new(STDIN.read)
       else
-        file = File.read(config[:file])
+        # FIXME: This should print a warning if there are multiple files
+        file = File.read(recipe_file.first)
         runner = Sandwich::Runner.new(file)
       end
       runner.run(config[:log_level])
