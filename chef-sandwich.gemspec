@@ -5,10 +5,14 @@ Gem::Specification.new do |gem|
   gem.version = Sandwich::Version
 
   gem.summary     = 'The easiest way to get started as a chef'
-  gem.description = 'The easiest way to get started as a chef'
   gem.author      = 'Sebastian Boehm'
   gem.email       = 'sebastian@sometimesfood.org'
-  gem.homepage    = 'https://github.com/sometimesfood/sandwich/'
+  gem.homepage    = 'https://github.com/sometimesfood/sandwich'
+
+  gem.description = <<EOS
+Sandwich lets you apply Chef recipes to your system without having to
+worry about cookbooks or configuration.
+EOS
 
   gem.has_rdoc    = 'yard'
 
