@@ -4,3 +4,31 @@
 
 get-orig-source:
 	uscan --download-current-version --force-download --rename
+
+define get_upstream_version
+	upstream_version=`git describe --tags \
+				--match 'v[0-9]*' --abbrev=0 HEAD | tr -d 'v'`
+endef
+
+merge-upstream:
+	git checkout master
+	git pull --tags git://github.com/sometimesfood/sandwich.git master
+	$(get_upstream_version) ; \
+	git reset --hard v$$upstream_version ; \
+	git checkout debian ; \
+	git-dch --new-version=$$upstream_version-1 --snapshot --auto ; \
+	uscan --download-version $$upstream_version --force-download --rename ; \
+	pristine-tar commit ../sandwich_$$upstream_version.orig.tar.gz master
+	git merge --no-ff master
+
+define get_debian_version
+	debian_version=`dpkg-parsechangelog | \
+			grep -E '^Version: ' | \
+			cut -d ' ' -f 2`
+endef
+
+finish-release:
+	git-dch --release --auto
+	git add debian/changelog
+	$(get_debian_version) ; git commit -m "debian/v$$debian_version"
+	git-buildpackage --git-tag
