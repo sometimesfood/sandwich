@@ -1,0 +1,6 @@
+#!/usr/bin/make -f
+%:
+	dh $@
+
+get-orig-source:
+	uscan --download-current-version --force-download --rename

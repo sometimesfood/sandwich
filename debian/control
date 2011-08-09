@@ -1,0 +1,18 @@
+Source: sandwich
+Section: ruby
+Priority: optional
+Maintainer: Sebastian Boehm <sebastian@sometimesfood.org>
+Build-Depends: debhelper (>= 7)
+Standards-Version: 3.8.4
+Vcs-Git: git://github.com/sometimesfood/sandwich.git
+Vcs-Browser: https://github.com/sometimesfood/sandwich
+
+Package: sandwich
+Architecture: all
+Depends: ${misc:Depends}, ruby, chef (>= 0.9)
+Description: simple command line runner for Chef recipes
+ Sandwich lets you run Chef recipes locally without any cookbook setup
+ or configuration.
+ .
+ It can be used interactively to debug Chef recipes or to test
+ resources, or to run existing recipes.
