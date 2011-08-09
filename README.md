@@ -44,6 +44,11 @@ Sandwich even makes managing cron jobs easy. Say you want to generate a new sign
     EOF
     sudo sandwich -l info -f fortune-signature.rb
 
+Installation
+------------
+
+    sudo gem install chef-sandwich
+
 Limitations
 -----------
 
