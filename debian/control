@@ -1,4 +1,4 @@
-Source: sandwich
+Source: chef-sandwich
 Section: ruby
 Priority: optional
 Maintainer: Sebastian Boehm <sebastian@sometimesfood.org>
@@ -7,7 +7,7 @@ Standards-Version: 3.9.1
 Vcs-Git: git://github.com/sometimesfood/sandwich.git
 Vcs-Browser: https://github.com/sometimesfood/sandwich
 
-Package: sandwich
+Package: chef-sandwich
 Architecture: all
 Depends: ${misc:Depends}, ruby, chef (>= 0.9)
 Description: simple command line runner for Chef recipes

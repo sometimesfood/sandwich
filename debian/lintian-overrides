@@ -1,2 +1,1 @@
-sandwich: new-package-should-close-itp-bug
-sandwich: binary-without-manpage usr/bin/sandwich
+chef-sandwich: binary-without-manpage usr/bin/sandwich

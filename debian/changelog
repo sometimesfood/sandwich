@@ -1,3 +1,11 @@
+chef-sandwich (0.1.0-2) lucid; urgency=low
+
+  * Rename package to chef-sandwich in order to avoid name conflicts
+    with the source package for r-cran-sandwich (also named
+    "sandwich")
+
+ -- Sebastian Boehm <sebastian@sometimesfood.org>  Wed, 24 Aug 2011 20:00:11 +0200
+
 sandwich (0.1.0-1) lucid; urgency=low
 
   * First release
