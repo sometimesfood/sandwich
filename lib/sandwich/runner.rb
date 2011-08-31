@@ -1,5 +1,6 @@
 require 'chef'
 require 'sandwich/recipe'
+require 'sandwich/cookbook_version'
 
 module Sandwich
   # This class constructs a {Chef::Recipe} from a recipe string and
@@ -8,8 +9,10 @@ module Sandwich
     # @param [String] recipe_string the recipe definition
     def initialize(recipe_string)
       @client = solo_client
-      @run_context = Chef::RunContext.new(@client.node, {})
-      @recipe = Chef::Recipe.new(nil, nil, @run_context)
+      cookbook_name = 'sandwich'
+      cookbook_collection = single_cookbook_collection(cookbook_name)
+      @run_context = Chef::RunContext.new(@client.node, cookbook_collection)
+      @recipe = Chef::Recipe.new(cookbook_name, nil, @run_context)
       @recipe.from_string(recipe_string)
     end
 
@@ -42,6 +45,12 @@ module Sandwich
         Chef::Config[:cache_options][:path] = File.join(local_cache, 'cache')
         Chef::Config[:file_backup_path] = File.join(local_cache, 'backup')
       end
+    end
+
+    # create a cookbook collection containing a single empty cookbook
+    def single_cookbook_collection(cookbook_name)
+      cookbook = Chef::CookbookVersion.new(cookbook_name)
+      Chef::CookbookCollection.new({ cookbook_name => cookbook })
     end
   end
 end
