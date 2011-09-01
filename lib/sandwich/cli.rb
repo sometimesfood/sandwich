@@ -42,13 +42,18 @@ module Sandwich
     # @param [Array] argv ARGV style command line options passed to sandwich
     # @return [void]
     def run(argv)
-      recipe_file = parse_options(argv)
-      if recipe_file.empty?
+      unparsed_arguments = parse_options(argv)
+      if unparsed_arguments.empty?
+        # no file name supplied, read from STDIN
         runner = Sandwich::Runner.new(STDIN.read)
       else
-        # FIXME: This should print a warning if there are multiple files
-        file = File.read(recipe_file.first)
-        runner = Sandwich::Runner.new(file)
+        # arguments supplied, use first one as filename...
+        recipe_filename = unparsed_arguments.shift
+        recipe_file = File.read(recipe_filename)
+        # ...and pass remaining arguments on to script
+        # FIXME: switches ('--foo', '-f', ...) get eaten up by mixlib-cli
+        ARGV.replace(unparsed_arguments)
+        runner = Sandwich::Runner.new(recipe_file)
       end
       runner.run(config[:log_level])
     end
