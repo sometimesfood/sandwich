@@ -6,11 +6,11 @@ module Sandwich
   # applies it with Chef standalone mode
   class Runner
     # @param [String] recipe_string the recipe definition
-    def initialize(recipe_string)
+    def initialize(recipe_string, filename)
       @client = solo_client
       @run_context = Chef::RunContext.new(@client.node, {})
       @recipe = Chef::Recipe.new(nil, nil, @run_context)
-      @recipe.from_string(recipe_string)
+      @recipe.from_string(recipe_string, filename)
     end
 
     # Run Chef in standalone mode, apply recipe

@@ -45,14 +45,14 @@ module Sandwich
       unparsed_arguments = @optparse.order!(argv)
       if unparsed_arguments.empty?
         # no file name supplied, read from STDIN
-        runner = Sandwich::Runner.new(STDIN.read)
+        runner = Sandwich::Runner.new(STDIN.read, '<STDIN>')
       else
         # arguments supplied, use first one as filename...
         recipe_filename = unparsed_arguments.shift
         recipe_file = File.read(recipe_filename)
         # ...and pass remaining arguments on to script
         ARGV.replace(unparsed_arguments)
-        runner = Sandwich::Runner.new(recipe_file)
+        runner = Sandwich::Runner.new(recipe_file, recipe_filename)
       end
       runner.run(@options[:log_level])
     end
