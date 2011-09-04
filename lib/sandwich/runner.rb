@@ -21,7 +21,7 @@ module Sandwich
     #        +fatal+)
     # @return [void]
     def run(log_level = :warn)
-      Chef::Log.level = log_level
+      configure_chef(log_level)
       Chef::Runner.new(@run_context).converge
     end
 
@@ -31,6 +31,17 @@ module Sandwich
       client = Chef::Client.new
       client.run_ohai
       client.build_node
+    end
+
+    def configure_chef(log_level)
+      Chef::Log.level = log_level
+
+      # don't try to write to /var as non-root user
+      unless ENV['USER'] == 'root'
+        local_cache = File.join(ENV['HOME'], '.cache', 'sandwich')
+        Chef::Config[:cache_options][:path] = File.join(local_cache, 'cache')
+        Chef::Config[:file_backup_path] = File.join(local_cache, 'backup')
+      end
     end
   end
 end
