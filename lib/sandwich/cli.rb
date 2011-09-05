@@ -13,7 +13,7 @@ module Sandwich
       @options[:log_level] = :warn
 
       @optparse = OptionParser.new do |opts|
-        opts.banner = 'Usage: sandwich [options] [sandwichfile] [arguments]'
+        opts.banner = 'Usage: sandwich [options] [sandwichfile [arguments]]'
 
         opts.on_tail('-v',
                      '--version',
