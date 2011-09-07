@@ -45,4 +45,17 @@ describe Sandwich::Runner do
       end
     end
   end
+
+  describe Chef::Resource::Directory do
+    it 'should create directories' do
+      dir = '/foo'
+      recipe = %Q(directory '#{dir}')
+      runner = runner_from_recipe(recipe)
+      with_fakefs do
+        assert !Dir.exists?(dir)
+        runner.run(:fatal)
+        assert Dir.exists?(dir)
+      end
+    end
+  end
 end
