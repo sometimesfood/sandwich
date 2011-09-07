@@ -1,2 +1,4 @@
-bin/* /usr/bin/
-lib/* /usr/lib/ruby/vendor_ruby/
+bin/* usr/bin/
+lib/* usr/lib/ruby/vendor_ruby/
+NEWS usr/share/doc/chef-sandwich/
+README.md usr/share/doc/chef-sandwich/
