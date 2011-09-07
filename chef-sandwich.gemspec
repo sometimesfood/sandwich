@@ -22,6 +22,7 @@ EOS
   gem.files = Dir['Rakefile',
                   'README.md',
                   'LICENSE',
+                  'NEWS',
                   '{bin,lib,man,test,spec}/**/*'] \
               & `git ls-files -z`.split("\0")
   gem.executables = ['sandwich']
