@@ -18,7 +18,7 @@ merge-upstream:
 	git checkout debian ; \
 	git-dch --new-version=$$upstream_version-1 --snapshot --auto ; \
 	uscan --download-version $$upstream_version --force-download --rename ; \
-	pristine-tar commit ../sandwich_$$upstream_version.orig.tar.gz master
+	pristine-tar commit ../chef-sandwich_$$upstream_version.orig.tar.gz master
 	git merge --no-ff master
 
 define get_debian_version
