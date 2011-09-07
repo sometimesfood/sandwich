@@ -4,6 +4,13 @@ require 'fileutils'
 require 'fakefs/safe'
 require 'sandwich/runner'
 
+# monkey patch for https://github.com/defunkt/fakefs/issues/96
+class FakeFS::Dir
+  def self.mkdir(path, integer = 0)
+    FileUtils.mkdir(path)
+  end
+end
+
 def runner_from_recipe(recipe)
   Sandwich::Runner.new(recipe, '')
 end
