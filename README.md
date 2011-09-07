@@ -16,7 +16,7 @@ For example, installing the package `htop` works like this:
 
 If you wanted to install zsh, make it the default shell for root and add a simple alias (without overwriting the existing zshrc), you could do something like this:
 
-    cat << EOF | sudo sandwich -l info
+    cat <<EOF | sudo sandwich -l info
     package "zsh"
     
     user "root" do
@@ -42,17 +42,22 @@ Sandwich even makes managing cron jobs easy. Say you want to generate a new sign
       command "fortune bofh-excuses > ~/.signature.sample"
     end
     EOF
-    sudo sandwich -l info -f fortune-signature.rb
+    sudo sandwich -l info fortune-signature.rb
 
 Installation
 ------------
 
+Sandwich is available as a gem called `chef-sandwich`:
+
     sudo gem install chef-sandwich
 
-Limitations
------------
+There's also a [chef-sandwich package for Debian/Ubuntu](https://launchpad.net/~sometimesfood/+archive/chef-sandwich/). Make sure to install a recent Chef version to go with Sandwich:
 
-Sandwich does not yet properly handle `cookbook_file` and `template` resources. It's on my TODO list, don't worry.
+    sudo apt-get install curl lsb-release python-software-properties
+    bash < <( curl -sL https://raw.github.com/sometimesfood/chef-admin-essentials/master/contrib/install-chef.sh )
+    sudo add-apt-repository ppa:sometimesfood/chef-sandwich
+    sudo apt-get update
+    sudo apt-get install chef-sandwich
 
 Extras
 ------
