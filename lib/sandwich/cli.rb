@@ -1,4 +1,4 @@
-require 'mixlib/cli'
+require 'optparse'
 require 'sandwich/runner'
 require 'sandwich/version'
 
@@ -6,52 +6,60 @@ module Sandwich
   # This class parses ARGV style command line options and starts a
   # configured {Sandwich::Runner}.
   class CLI
-    include Mixlib::CLI
+    def initialize
+      @options = {}
 
-    option :help,
-      :short        => '-h',
-      :long         => '--help',
-      :description  => 'Show this message',
-      :boolean      => true,
-      :on           => :tail,
-      :show_options => true,
-      :exit         => 0
+      # default log level
+      @options[:log_level] = :warn
 
-    option :file,
-      :short       => '-f FILE',
-      :long        => '--file FILE',
-      :description => 'Read recipe from FILE, defaults to standard input',
-      :default     => '-',
-      :on          => :head
+      @optparse = OptionParser.new do |opts|
+        opts.banner = 'Usage: sandwich [options] [sandwichfile [arguments]]'
 
-    option :log_level,
-      :short        => '-l LEVEL',
-      :long         => '--log_level LEVEL',
-      :description  => 'Set the log level (debug, info, warn, error, fatal)',
-      :default      => :warn,
-      :proc         => lambda { |l| l.to_sym }
+        opts.on_tail('-v',
+                     '--version',
+                     'Show sandwich version') do
+          puts "sandwich: #{Sandwich::Version}"
+          exit
+        end
 
-    option :version,
-      :short       => '-v',
-      :long        => '--version',
-      :description => 'Show sandwich version',
-      :boolean     => true,
-      :proc        => lambda { |v| puts "sandwich: #{Sandwich::Version}" },
-      :exit        => 0
+        opts.on_tail('-h',
+                     '--help',
+                     'Show this message') do
+          puts opts
+          exit
+        end
+
+        opts.on('-l',
+                '--log_level LEVEL',
+                'Set the log level (debug, info, warn, error, fatal)') do |l|
+          @options[:log_level] = l.to_sym
+        end
+      end
+    end
 
     # Start Sandwich
     #
     # @param [Array] argv ARGV style command line options passed to sandwich
     # @return [void]
     def run(argv)
-      parse_options(argv)
-      if config[:file] == '-'
-        runner = Sandwich::Runner.new(STDIN.read)
+      unparsed_arguments = @optparse.order!(argv)
+
+      # use first argument as sandwich script filename...
+      recipe_filename = unparsed_arguments.shift
+
+      # ...check for stdin...
+      if recipe_filename.nil? || recipe_filename == '-'
+        recipe_filename = '<STDIN>'
+        recipe_file = STDIN.read
       else
-        file = File.read(config[:file])
-        runner = Sandwich::Runner.new(file)
+        recipe_file = File.read(recipe_filename)
       end
-      runner.run(config[:log_level])
+
+      # ...and pass remaining arguments on to script
+      ARGV.replace(unparsed_arguments)
+      runner = Sandwich::Runner.new(recipe_file, recipe_filename)
+
+      runner.run(@options[:log_level])
     end
   end
 end

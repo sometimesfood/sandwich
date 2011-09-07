@@ -1,4 +1,12 @@
 * sandwich NEWS
+** 0.2.0 (2011-09-07)
+
+ - Add support for cookbook_file and template resources
+ - Add support for standalone sandwich scripts: sandwich can now be
+   used in shebang lines
+ - Save file caches and file backups to ~/.cache/sandwich instead of
+   /var/cache/chef for non-root users, fixes #3
+ - Report correct recipe filename in error messages, fixes #2
 
 ** 0.1.0 (2011-08-09)
 

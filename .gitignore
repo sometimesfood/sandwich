@@ -2,3 +2,6 @@
 .yardoc/
 doc/
 *.gem
+.bundle/
+vendor/
+Gemfile.lock

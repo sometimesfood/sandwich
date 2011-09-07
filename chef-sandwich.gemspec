@@ -16,10 +16,13 @@ EOS
 
   gem.has_rdoc    = 'yard'
 
+  gem.add_dependency('chef', ['>= 0.9'])
+
   # ensure the gem is built out of versioned files
   gem.files = Dir['Rakefile',
                   'README.md',
                   'LICENSE',
+                  'NEWS',
                   '{bin,lib,man,test,spec}/**/*'] \
               & `git ls-files -z`.split("\0")
   gem.executables = ['sandwich']
