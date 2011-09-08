@@ -2,7 +2,7 @@ require File.expand_path("../lib/sandwich/version", __FILE__)
 
 Gem::Specification.new do |gem|
   gem.name    = 'chef-sandwich'
-  gem.version = Sandwich::Version
+  gem.version = Sandwich::VERSION
 
   gem.summary     = 'The easiest way to get started as a chef'
   gem.author      = 'Sebastian Boehm'

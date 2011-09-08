@@ -18,7 +18,7 @@ module Sandwich
         opts.on_tail('-v',
                      '--version',
                      'Show sandwich version') do
-          puts "sandwich: #{Sandwich::Version}"
+          puts "sandwich: #{Sandwich::VERSION}"
           exit
         end
 
