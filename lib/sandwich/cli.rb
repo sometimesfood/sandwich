@@ -19,6 +19,7 @@ module Sandwich
                      '--version',
                      'Show sandwich version') do
           puts "sandwich: #{Sandwich::VERSION}"
+          puts "chef: #{Chef::VERSION}"
           exit
         end
 
