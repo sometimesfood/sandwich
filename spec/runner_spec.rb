@@ -19,13 +19,13 @@ describe Sandwich::Runner do
       end
     end
 
-    # FIXME: chef 0.9 throws Errno::ENOENT while chef 0.10 throws
-    # EnclosingDirectoryDoesNotExist
     it 'should throw exceptions for files in missing directories' do
       filename = '/i/am/not/here'
       content = 'hello world'
       recipe = %Q(file '#{filename}' do content '#{content}';end)
-      proc { run_recipe recipe }.must_raise Chef::Exceptions::EnclosingDirectoryDoesNotExist
+      run = Proc.new { run_recipe recipe }
+      run.must_raise(Errno::ENOENT,
+                     Chef::Exceptions::EnclosingDirectoryDoesNotExist)
     end
   end
 

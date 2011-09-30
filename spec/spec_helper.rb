@@ -31,3 +31,6 @@ def setup_standard_dirs
   FileUtils.mkdir_p '/tmp'
   FileUtils.mkdir_p File.expand_path(Dir.getwd)
 end
+
+# make sure Chef 0.10 exceptions are available when using older Chef versions
+class Chef::Exceptions::EnclosingDirectoryDoesNotExist; end
