@@ -17,6 +17,8 @@ EOS
   gem.has_rdoc    = 'yard'
 
   gem.add_dependency('chef', ['>= 0.9'])
+  gem.add_dependency('uuidtools')
+
   gem.add_development_dependency('minitest')
   gem.add_development_dependency('fakefs')
   gem.add_development_dependency('rake', ['~> 0.8.7'])
