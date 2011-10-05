@@ -12,6 +12,8 @@ module Sandwich
       # default log level
       @options[:log_level] = :warn
 
+      @options[:command] = []
+
       @optparse = OptionParser.new do |opts|
         opts.banner = 'Usage: sandwich [options] [sandwichfile [arguments]]'
 
@@ -35,6 +37,12 @@ module Sandwich
                 'Set the log level (debug, info, warn, error, fatal)') do |l|
           @options[:log_level] = l.to_sym
         end
+
+        opts.on('-e',
+                '--command COMMAND',
+                'Execute command as a sandwich script') do |c|
+          @options[:command] << c
+        end
       end
     end
 
@@ -48,8 +56,12 @@ module Sandwich
       # use first argument as sandwich script filename...
       recipe_filename = unparsed_arguments.shift
 
+      # ...check for -e commands...
+      if @options[:command]
+        recipe_filename = '<COMMAND>'
+        recipe_file = @options[:command].join("\n")
       # ...check for stdin...
-      if recipe_filename.nil? || recipe_filename == '-'
+      elsif recipe_filename.nil? || recipe_filename == '-'
         recipe_filename = '<STDIN>'
         recipe_file = STDIN.read
       else
