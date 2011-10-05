@@ -59,18 +59,18 @@ module Sandwich
       # ...check for -e commands...
       if @options[:command]
         recipe_filename = '<COMMAND>'
-        recipe_file = @options[:command].join("\n")
+        recipe = @options[:command].join("\n")
       # ...check for stdin...
       elsif recipe_filename.nil? || recipe_filename == '-'
         recipe_filename = '<STDIN>'
-        recipe_file = STDIN.read
+        recipe = STDIN.read
       else
-        recipe_file = File.read(recipe_filename)
+        recipe = File.read(recipe_filename)
       end
 
       # ...and pass remaining arguments on to script
       ARGV.replace(unparsed_arguments)
-      runner = Sandwich::Runner.new(recipe_file, recipe_filename)
+      runner = Sandwich::Runner.new(recipe, recipe_filename)
 
       runner.run(@options[:log_level])
     end
