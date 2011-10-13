@@ -10,7 +10,7 @@ module Sandwich
       @options = {}
 
       # default log level
-      @options[:log_level] = :warn
+      @options[:log_level] = :error
 
       @options[:command] = []
 
