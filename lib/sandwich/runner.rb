@@ -23,6 +23,15 @@ module Sandwich
       @client.run
     end
 
+    # Add a cookbook directory to the front of the runner's cookbook
+    # search path
+    #
+    # @param [String] cookbook_dir the cookbook directory to add
+    # @return [Array] the new cookbook search path
+    def add_cookbook_dir(cookbook_dir)
+      Chef::Config[:cookbook_path].unshift(cookbook_dir)
+    end
+
     private
     def configure_chef(log_level)
       Chef::Log.level = log_level
