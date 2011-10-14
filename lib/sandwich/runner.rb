@@ -4,11 +4,18 @@ require 'sandwich/client'
 
 module Sandwich
   # This class constructs a {Chef::Recipe} from a recipe string and
-  # applies it with Chef standalone mode
+  # applies it with Chef standalone mode.
   class Runner
+    # Create a new instance of Runner.
+    #
+    # File specified by +recipe_filename+ is only read if no
+    # +recipe_string+ is supplied, otherwise +recipe_string+ is used
+    # as a recipe and +recipe_filename+ is only used in log messages.
+    #
+    # @param [String] recipe_filename the recipe filename
     # @param [String] recipe_string the recipe definition
-    def initialize(recipe_string, filename)
-      @client = Sandwich::Client.new(recipe_string, filename)
+    def initialize(recipe_filename, recipe_string = nil)
+      @client = Sandwich::Client.new(recipe_filename, recipe_string)
     end
 
     # Run Chef in standalone mode, apply recipe
@@ -21,15 +28,6 @@ module Sandwich
     def run(log_level = :warn)
       configure_chef(log_level)
       @client.run
-    end
-
-    # Add a cookbook directory to the front of the runner's cookbook
-    # search path
-    #
-    # @param [String] cookbook_dir the cookbook directory to add
-    # @return [Array] the new cookbook search path
-    def add_cookbook_dir(cookbook_dir)
-      Chef::Config[:cookbook_path].unshift(cookbook_dir)
     end
 
     private

@@ -24,7 +24,7 @@ class FakeFS::Dir
 end
 
 def runner_from_recipe(recipe)
-  Sandwich::Runner.new(recipe, '')
+  Sandwich::Runner.new('<SPEC_HELPER>', recipe)
 end
 
 def run_recipe(recipe)

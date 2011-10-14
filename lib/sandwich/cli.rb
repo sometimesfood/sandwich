@@ -60,22 +60,18 @@ module Sandwich
       if @options[:command]
         recipe_filename = '<COMMAND>'
         recipe = @options[:command].join("\n")
-        cookbook_dir = Dir.getwd
       # ...check for stdin...
       elsif recipe_filename.nil? || recipe_filename == '-'
         recipe_filename = '<STDIN>'
         recipe = STDIN.read
-        cookbook_dir = Dir.getwd
       else
-        recipe = File.read(recipe_filename)
-        cookbook_dir = File.expand_path(File.dirname(recipe_filename))
+        recipe = nil
       end
 
       # ...and pass remaining arguments on to script
       ARGV.replace(unparsed_arguments)
 
-      runner = Sandwich::Runner.new(recipe, recipe_filename)
-      runner.add_cookbook_dir(cookbook_dir)
+      runner = Sandwich::Runner.new(recipe_filename, recipe)
       runner.run(@options[:log_level])
     end
   end
