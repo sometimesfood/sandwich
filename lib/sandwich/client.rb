@@ -46,5 +46,8 @@ module Sandwich
     ensure
       Chef::Log.level = log_level
     end
+
+    # monkey patch: don't check for empty cookbook paths
+    def assert_cookbook_path_not_empty(run_context); end
   end
 end

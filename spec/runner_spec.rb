@@ -11,9 +11,8 @@ describe Sandwich::Runner do
       filename = '/foo'
       content = 'hello world'
       recipe = %Q(file '#{filename}' do content '#{content}';end)
-      runner = runner_from_recipe(recipe)
+      run_recipe(recipe)
       with_fakefs do
-        runner.run(:fatal)
         file = File.read(filename)
         file.must_equal content
       end
@@ -35,12 +34,13 @@ describe Sandwich::Runner do
       target = '/target'
       content = 'hello world'
       recipe = %Q(cookbook_file '#{target}' do source '#{source}';end)
-      runner = runner_from_recipe(recipe)
       with_fakefs do
         setup_standard_dirs
         # create source for cookbook file
         File.open(source, 'w') { |f| f.write(content) }
-        runner.run(:fatal)
+      end
+      run_recipe(recipe)
+      with_fakefs do
         File.read(source).must_equal File.read(target)
       end
     end
@@ -50,12 +50,9 @@ describe Sandwich::Runner do
     it 'should create directories' do
       dir = '/foo'
       recipe = %Q(directory '#{dir}')
-      runner = runner_from_recipe(recipe)
-      with_fakefs do
-        assert !Dir.exists?(dir)
-        runner.run(:fatal)
-        assert Dir.exists?(dir)
-      end
+      with_fakefs { assert !Dir.exists?(dir) }
+      run_recipe(recipe)
+      with_fakefs { assert Dir.exists?(dir) }
     end
   end
 end

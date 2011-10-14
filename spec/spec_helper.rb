@@ -3,6 +3,18 @@ require 'minitest/autorun'
 require 'fileutils'
 require 'fakefs/safe'
 require 'sandwich/runner'
+require 'chef'
+
+class Chef::Client
+  def fake_converge(run_context)
+    with_fakefs do
+      real_converge(run_context)
+    end
+    true
+  end
+  alias :real_converge :converge
+  alias :converge :fake_converge
+end
 
 # monkey patch for https://github.com/defunkt/fakefs/issues/96
 class FakeFS::Dir
@@ -16,8 +28,7 @@ def runner_from_recipe(recipe)
 end
 
 def run_recipe(recipe)
-  r = runner_from_recipe(recipe)
-  with_fakefs { r.run(:fatal) }
+  runner_from_recipe(recipe).run(:fatal)
 end
 
 def with_fakefs
