@@ -5,15 +5,15 @@ require 'fakefs/safe'
 require 'sandwich/runner'
 require 'chef'
 
-class Chef::Client
-  def fake_converge(run_context)
-    with_fakefs do
-      real_converge(run_context)
-    end
-    true
+# Ohai::System, monkey patched to return static values
+class Ohai::System
+  def all_plugins
+    @data = Mash.new({ :hostname => 'archie',
+                       :platform => 'ubuntu',
+                       :fqdn => 'archie.example.com',
+                       :platform_version => '11.04',
+                       :os_version => '2.6.38-10-generic' })
   end
-  alias :real_converge :converge
-  alias :converge :fake_converge
 end
 
 # monkey patch for https://github.com/defunkt/fakefs/issues/96
@@ -33,6 +33,7 @@ end
 
 def with_fakefs
   FakeFS.activate!
+  setup_standard_dirs
   yield
 ensure
   FakeFS.deactivate!
@@ -40,7 +41,6 @@ end
 
 def setup_standard_dirs
   FileUtils.mkdir_p '/tmp'
-  FileUtils.mkdir_p File.expand_path(Dir.getwd)
 end
 
 # make sure Chef 0.10 exceptions are available when using older Chef versions
