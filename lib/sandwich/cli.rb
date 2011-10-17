@@ -53,22 +53,24 @@ module Sandwich
     def run(argv)
       unparsed_arguments = @optparse.order!(argv)
 
-      # use first argument as sandwich script filename...
-      recipe_filename = unparsed_arguments.shift
-
-      # ...check for -e commands...
+      # check for -e commands
       if @options[:command].any?
         recipe_filename = '<COMMAND>'
         recipe = @options[:command].join("\n")
-      # ...check for stdin...
-      elsif recipe_filename.nil? || recipe_filename == '-'
-        recipe_filename = '<STDIN>'
-        recipe = STDIN.read
       else
-        recipe = nil
+        # use first argument as sandwich script filename...
+        recipe_filename = unparsed_arguments.shift
+
+        # check for stdin
+        if recipe_filename.nil? || recipe_filename == '-'
+          recipe_filename = '<STDIN>'
+          recipe = STDIN.read
+        else
+          recipe = nil
+        end
       end
 
-      # ...and pass remaining arguments on to script
+      # pass remaining arguments on to script
       ARGV.replace(unparsed_arguments)
 
       runner = Sandwich::Runner.new(recipe_filename, recipe)
