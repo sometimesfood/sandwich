@@ -57,7 +57,7 @@ module Sandwich
       recipe_filename = unparsed_arguments.shift
 
       # ...check for -e commands...
-      if @options[:command]
+      if @options[:command].any?
         recipe_filename = '<COMMAND>'
         recipe = @options[:command].join("\n")
       # ...check for stdin...
