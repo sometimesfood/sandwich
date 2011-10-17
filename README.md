@@ -59,11 +59,6 @@ There's also a [chef-sandwich package for Debian/Ubuntu](https://launchpad.net/~
     sudo apt-get update
     sudo apt-get install chef-sandwich
 
-Limitations
------------
-
-Sandwich does not currently suppport cookbooks. Dont't worry, it's on my TODO list.
-
 Extras
 ------
 

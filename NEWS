@@ -1,4 +1,13 @@
 * sandwich NEWS
+** 0.3.0 (2011-10-17)
+
+ - Add -e option
+ - Add support for cookbooks: sandwich can now load other cookbooks
+ - Show chef version in --version output
+ - Change default log level from "warn" to "error"
+ - Change cookbook file lookup to work relative to sandwich scripts,
+   fixes #6
+
 ** 0.2.0 (2011-09-07)
 
  - Add support for cookbook_file and template resources
