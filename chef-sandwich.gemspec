@@ -2,7 +2,7 @@ require File.expand_path("../lib/sandwich/version", __FILE__)
 
 Gem::Specification.new do |gem|
   gem.name    = 'chef-sandwich'
-  gem.version = Sandwich::Version
+  gem.version = Sandwich::VERSION
 
   gem.summary     = 'The easiest way to get started as a chef'
   gem.author      = 'Sebastian Boehm'
@@ -17,13 +17,18 @@ EOS
   gem.has_rdoc    = 'yard'
 
   gem.add_dependency('chef', ['>= 0.9'])
+  gem.add_dependency('uuidtools')
+
+  gem.add_development_dependency('minitest')
+  gem.add_development_dependency('fakefs')
+  gem.add_development_dependency('rake', ['~> 0.8.7'])
 
   # ensure the gem is built out of versioned files
   gem.files = Dir['Rakefile',
                   'README.md',
                   'LICENSE',
                   'NEWS',
-                  '{bin,lib,man,test,spec}/**/*'] \
+                  '{bin,lib,man,spec}/**/*'] \
               & `git ls-files -z`.split("\0")
   gem.executables = ['sandwich']
 end
