@@ -14,8 +14,6 @@ Sandwich lets you apply Chef recipes to your system without having to
 worry about cookbooks or configuration.
 EOS
 
-  gem.has_rdoc    = 'yard'
-
   gem.add_dependency('chef', ['>= 0.9'])
   gem.add_dependency('uuidtools')
 
