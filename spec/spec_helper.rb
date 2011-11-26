@@ -16,6 +16,12 @@ class Ohai::System
   end
 end
 
+def ohai_data(key)
+  ohai = Ohai::System.new
+  ohai.all_plugins
+  ohai.data[key]
+end
+
 # monkey patch for https://github.com/defunkt/fakefs/issues/96
 class FakeFS::Dir
   def self.mkdir(path, integer = 0)
@@ -31,10 +37,22 @@ def run_recipe(recipe)
   runner_from_recipe(recipe).run(:fatal)
 end
 
+# fakefs does not support IO.read (which is used a lot by chef),
+# therefore monkey patch IO.read to use FakeFS::File.read
+def with_fake_io_read
+  IO.instance_eval do
+    alias :read_orig :read
+    def self.read(path); FakeFS::File.read(path); end
+  end
+  yield
+ensure
+  IO.instance_eval { alias :read :read_orig }
+end
+
 def with_fakefs
   FakeFS.activate!
   setup_standard_dirs
-  yield
+  with_fake_io_read { yield }
 ensure
   FakeFS.deactivate!
 end

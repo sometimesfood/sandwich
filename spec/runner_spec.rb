@@ -45,6 +45,22 @@ describe Sandwich::Runner do
     end
   end
 
+  describe Chef::Resource::Template do
+    it 'should create templates' do
+      with_fakefs do
+        source = '/source.erb'
+        target = '/target'
+        content = 'hello <%= node[:hostname] %>'
+        recipe = %Q(template '#{target}' do source '/source.erb';end)
+        # create source template
+        File.open(source, 'w') { |f| f.write(content) }
+        run_recipe(recipe)
+        hostname = ohai_data(:hostname)
+        File.read(target).must_equal "hello #{hostname}"
+      end
+    end
+  end
+
   describe Chef::Resource::Directory do
     it 'should create directories' do
       with_fakefs do
