@@ -1,6 +1,7 @@
 require 'rake/testtask'
+require 'sandwich/version'
 
-desc 'Build chef-sandwich gem'
+desc "Build chef-sandwich-#{Sandwich::VERSION}.gem"
 task :gem do
   sh 'gem build chef-sandwich.gemspec'
 end
