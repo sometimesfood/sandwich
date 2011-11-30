@@ -9,5 +9,4 @@ end
 
 Rake::TestTask.new do |t|
   t.pattern = 'spec/*_spec.rb'
-  t.verbose = false
 end
