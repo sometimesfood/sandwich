@@ -1,10 +1,8 @@
 require 'rake/testtask'
 
-namespace :gem do
-  desc 'Build chef-sandwich gem'
-  task :build do
-    sh 'gem build chef-sandwich.gemspec'
-  end
+desc 'Build chef-sandwich gem'
+task :gem do
+  sh 'gem build chef-sandwich.gemspec'
 end
 
 Rake::TestTask.new do |t|
