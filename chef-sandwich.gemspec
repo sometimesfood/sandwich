@@ -18,6 +18,8 @@ EOS
   gem.add_dependency('uuidtools')
 
   gem.add_development_dependency('minitest')
+  gem.add_development_dependency('guard')
+  gem.add_development_dependency('guard-minitest')
   gem.add_development_dependency('fakefs')
   gem.add_development_dependency('rake', ['~> 0.8.7'])
 
