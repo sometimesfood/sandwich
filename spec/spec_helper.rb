@@ -50,11 +50,10 @@ ensure
 end
 
 def with_fakefs
-  FakeFS.activate!
-  setup_standard_dirs
-  with_fake_io_read { yield }
-ensure
-  FakeFS.deactivate!
+  FakeFS do
+    setup_standard_dirs
+    with_fake_io_read { yield }
+  end
 end
 
 def setup_standard_dirs
