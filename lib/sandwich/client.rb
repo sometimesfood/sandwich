@@ -1,5 +1,6 @@
 require 'sandwich/cookbook_version'
 require 'chef'
+require 'uuidtools'
 
 module Sandwich
   # Chef::Client extended to inject a Sandwich cookbook into the
