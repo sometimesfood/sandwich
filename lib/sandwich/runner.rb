@@ -14,8 +14,9 @@ module Sandwich
     #
     # @param [String] recipe_filename the recipe filename
     # @param [String] recipe_string the recipe definition
-    def initialize(recipe_filename, recipe_string = nil)
-      @client = Sandwich::Client.new(recipe_filename, recipe_string)
+    # @param [Hash]   json_attribs the JSON attributes
+    def initialize(recipe_filename, recipe_string = nil, json_attribs = nil)
+      @client = Sandwich::Client.new(recipe_filename, recipe_string, json_attribs)
     end
 
     # Run Chef in standalone mode, apply recipe
