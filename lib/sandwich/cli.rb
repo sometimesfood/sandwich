@@ -43,6 +43,12 @@ module Sandwich
                 'Execute command as a sandwich script') do |c|
           @options[:command] << c
         end
+
+        opts.on('-W',
+                '--why-run',
+                'Enable whyrun mode') do
+          @options[:why_run] = true
+        end
       end
     end
 
@@ -68,6 +74,10 @@ module Sandwich
         else
           recipe = nil
         end
+      end
+
+      if @options[:why_run]
+        Chef::Config[:why_run] = true
       end
 
       # pass remaining arguments on to script
