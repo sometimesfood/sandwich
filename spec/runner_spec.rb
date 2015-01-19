@@ -17,17 +17,6 @@ describe Sandwich::Runner do
         file.must_equal content
       end
     end
-
-    it 'should throw exceptions for files in missing directories' do
-      with_fakefs do
-        filename = '/i/am/not/here'
-        content = 'hello world'
-        recipe = %Q(file '#{filename}' do content '#{content}';end)
-        run = Proc.new { run_recipe recipe }
-        run.must_raise(Errno::ENOENT,
-                       Chef::Exceptions::EnclosingDirectoryDoesNotExist)
-      end
-    end
   end
 
   describe Chef::Resource::CookbookFile do
