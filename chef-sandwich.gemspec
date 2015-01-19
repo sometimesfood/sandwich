@@ -14,14 +14,12 @@ Sandwich lets you apply Chef recipes to your system without having to
 worry about cookbooks or configuration.
 EOS
 
-  gem.add_dependency('chef', ['>= 0.9'])
-  gem.add_dependency('uuidtools')
+  gem.add_dependency('chef', '>= 0.9')
+  gem.add_dependency('uuidtools', '~> 2.1.5')
 
-  gem.add_development_dependency('minitest')
-  gem.add_development_dependency('guard')
-  gem.add_development_dependency('guard-minitest')
-  gem.add_development_dependency('fakefs')
-  gem.add_development_dependency('rake', ['~> 0.8.7'])
+  gem.add_development_dependency('minitest', '~> 5.5.1')
+  gem.add_development_dependency('fakefs', '~> 0.6.4')
+  gem.add_development_dependency('rake', '~> 10.4.2')
 
   # ensure the gem is built out of versioned files
   gem.files = Dir['Rakefile',
