@@ -8,6 +8,7 @@ Gem::Specification.new do |gem|
   gem.author      = 'Sebastian Boehm'
   gem.email       = 'sebastian@sometimesfood.org'
   gem.homepage    = 'https://github.com/sometimesfood/sandwich'
+  gem.license     = 'Apache License (2.0)'
 
   gem.description = <<EOS
 Sandwich lets you apply Chef recipes to your system without having to
