@@ -1,2 +1,2 @@
 version=3
-http://githubredir.debian.net/github/sometimesfood/sandwich/ v(.*).tar.gz
+https://github.com/sometimesfood/sandwich/tags .*/v(.*).tar.gz
