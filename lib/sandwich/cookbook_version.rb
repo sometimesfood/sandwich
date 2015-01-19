@@ -29,7 +29,7 @@ module Sandwich
         File.join(segment.to_s, node[:platform], filename),
         File.join(segment.to_s, 'default', filename),
         File.join(segment.to_s, filename),
-        File.expand_path(filename, @base_dir), # keep absolute paths, convert relative paths into absolute paths
+        File.expand_path(filename, @basedir), # keep absolute paths, convert relative paths into absolute paths
       ]
       segment_filenames.find {|filename| File.exist?(filename) }
     end
