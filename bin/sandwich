@@ -6,6 +6,6 @@ begin
   sandwich.run(ARGV)
 rescue SystemExit
 rescue Exception => e
-  $stderr.puts("sandwich: #{e.message}")
+  $stderr.puts("sandwich: #{e.class} #{e.message} #{e.backtrace.first}")
   exit(1)
 end

@@ -17,17 +17,6 @@ describe Sandwich::Runner do
         file.must_equal content
       end
     end
-
-    it 'should throw exceptions for files in missing directories' do
-      with_fakefs do
-        filename = '/i/am/not/here'
-        content = 'hello world'
-        recipe = %Q(file '#{filename}' do content '#{content}';end)
-        run = Proc.new { run_recipe recipe }
-        run.must_raise(Errno::ENOENT,
-                       Chef::Exceptions::EnclosingDirectoryDoesNotExist)
-      end
-    end
   end
 
   describe Chef::Resource::CookbookFile do
@@ -41,6 +30,22 @@ describe Sandwich::Runner do
         File.open(source, 'w') { |f| f.write(content) }
         run_recipe(recipe)
         File.read(source).must_equal File.read(target)
+      end
+    end
+  end
+
+  describe Chef::Resource::Template do
+    it 'should create templates' do
+      with_fakefs do
+        source = '/source.erb'
+        target = '/target'
+        content = 'hello <%= node[:hostname] %>'
+        recipe = %Q(template '#{target}' do source '/source.erb';end)
+        # create source template
+        File.open(source, 'w') { |f| f.write(content) }
+        run_recipe(recipe)
+        hostname = ohai_data(:hostname)
+        File.read(target).must_equal "hello #{hostname}"
       end
     end
   end

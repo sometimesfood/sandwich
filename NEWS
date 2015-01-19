@@ -1,4 +1,14 @@
 * sandwich NEWS
+** 0.4.0 (2015-01-19)
+
+ - Naotoshi Seo
+   - Fix uninitialized constant Sandwich::Client::UUIDTools
+   - Fix uninitialized constant Chef::Application
+   - Support segment_filenames
+   - Add --json-attributes option
+   - Support --why-run mode
+   - Enhance error message shown by sandwich command
+
 ** 0.3.0 (2011-10-17)
 
  - Add -e option

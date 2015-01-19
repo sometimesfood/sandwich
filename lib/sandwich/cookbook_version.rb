@@ -24,8 +24,14 @@ module Sandwich
                                             segment,
                                             filename,
                                             current_filepath=nil)
-      # keep absolute paths, convert relative paths into absolute paths
-      filename.start_with?('/') ? filename : File.join(@basedir, filename)
+      segment_filenames = [
+        File.join(segment.to_s, "#{node[:platform]}-#{node[:platform_version]}", filename),
+        File.join(segment.to_s, node[:platform], filename),
+        File.join(segment.to_s, 'default', filename),
+        File.join(segment.to_s, filename),
+        File.expand_path(filename, @basedir), # keep absolute paths, convert relative paths into absolute paths
+      ]
+      segment_filenames.find {|filename| File.exist?(filename) }
     end
   end
 end

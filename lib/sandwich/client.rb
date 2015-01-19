@@ -1,5 +1,7 @@
 require 'sandwich/cookbook_version'
 require 'chef'
+require 'uuidtools'
+require 'chef/application'
 
 module Sandwich
   # Chef::Client extended to inject a Sandwich cookbook into the
@@ -13,9 +15,10 @@ module Sandwich
     #
     # @param [String] recipe_filename the recipe filename
     # @param [String] recipe_string the recipe definition
-    def initialize(recipe_filename, recipe_string = nil)
+    # @param [Hash]   json_attribs the JSON attributes
+    def initialize(recipe_filename, recipe_string = nil, json_attribs = nil)
       Chef::Config[:solo] = true
-      super()
+      super(json_attribs)
 
       if recipe_string
         @sandwich_basedir = Dir.getwd

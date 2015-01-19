@@ -1,13 +1,11 @@
 require 'rake/testtask'
+require 'sandwich/version'
 
-namespace :gem do
-  desc 'Build chef-sandwich gem'
-  task :build do
-    sh 'gem build chef-sandwich.gemspec'
-  end
+desc "Build chef-sandwich-#{Sandwich::VERSION}.gem"
+task :gem do
+  sh 'gem build chef-sandwich.gemspec'
 end
 
 Rake::TestTask.new do |t|
   t.pattern = 'spec/*_spec.rb'
-  t.verbose = false
 end
