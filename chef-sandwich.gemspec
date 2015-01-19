@@ -14,7 +14,7 @@ Sandwich lets you apply Chef recipes to your system without having to
 worry about cookbooks or configuration.
 EOS
 
-  gem.add_dependency('chef', '>= 0.9')
+  gem.add_dependency('chef', '~> 11.12.8')
   gem.add_dependency('uuidtools', '~> 2.1.5')
 
   gem.add_development_dependency('minitest', '~> 5.5.1')
